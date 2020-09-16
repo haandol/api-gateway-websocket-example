@@ -84,22 +84,6 @@ export class ApiGatewayStack extends cdk.Stack {
       stageName: alphaStage.stageName,
     });
     alphaDeployment.addDependsOn(defaultRoute);
- 
-    const prodStage = new apigw.CfnStage(this, `ProdStage`, {
-      apiId: this.api.ref,
-      stageName: 'prod',
-      autoDeploy: true,
-      defaultRouteSettings: {
-        dataTraceEnabled: true,
-        loggingLevel: 'INFO',
-      }
-    });
-    const prodDeployment = new apigw.CfnDeployment(this, `ProdDeployment`, {
-      apiId: this.api.ref,
-      stageName: prodStage.stageName,
-    });
-    prodDeployment.addDependsOn(defaultRoute);
- 
   }
 
 }
