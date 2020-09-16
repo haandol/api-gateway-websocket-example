@@ -15,7 +15,7 @@ def handler(event, context):
 
     connection_id = request_context['connectionId']
     response = client.post_to_connection(
-        Data=b'bytes',
+        Data=request_context['body'].encode('utf-8'),
         ConnectionId=connection_id,
     )
     print(response)
