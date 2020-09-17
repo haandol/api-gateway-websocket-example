@@ -79,7 +79,7 @@ Join to the room1
 
 ```bash
 > {"action": "join", "room": "room1"}
-< S_579fEDoE0CJng= has joined to Room room1
+< S_7SxeJSIE0CIRQ= has joined to Room room1
 ```
 
 Send arbitrary message and see if the message is displayed on both users' terminal
