@@ -7,6 +7,7 @@ interface Props extends cdk.StackProps {
   connectFunction: lambda.IFunction;
   disconnectFunction: lambda.IFunction;
   defaultFunction: lambda.IFunction;
+  joinAndSendFunction: lambda.IFunction;
 }
 
 export class ApiGatewayStack extends cdk.Stack {
@@ -70,6 +71,34 @@ export class ApiGatewayStack extends cdk.Stack {
       target: `integrations/${defaultInteg.ref}`,
     });
 
+    // chat
+    const joinInteg = new apigw.CfnIntegration(this, `JoinIntegration`, {
+      apiId: this.api.ref,
+      integrationType: 'AWS_PROXY',
+      integrationUri: `arn:aws:apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/${props.joinAndSendFunction.functionArn}/invocations`,
+      credentialsArn: credentialsRole.roleArn,
+    });
+    const joinRoute = new apigw.CfnRoute(this, `JoinRoute`, {
+      apiId: this.api.ref,
+      routeKey: 'join',
+      operationName: 'JoinRoute',
+      target: `integrations/${joinInteg.ref}`,
+    });
+
+    const sendInteg = new apigw.CfnIntegration(this, `SendIntegration`, {
+      apiId: this.api.ref,
+      integrationType: 'AWS_PROXY',
+      integrationUri: `arn:aws:apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/${props.joinAndSendFunction.functionArn}/invocations`,
+      credentialsArn: credentialsRole.roleArn,
+    });
+    const sendRoute = new apigw.CfnRoute(this, `SendRoute`, {
+      apiId: this.api.ref,
+      routeKey: 'send',
+      operationName: 'SendRoute',
+      target: `integrations/${sendInteg.ref}`,
+    });
+
+    // deployment
     const alphaStage = new apigw.CfnStage(this, `AlphaStage`, {
       apiId: this.api.ref,
       stageName: 'alpha',

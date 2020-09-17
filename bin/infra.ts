@@ -16,5 +16,6 @@ const apigwStack = new ApiGatewayStack(app, `${ns}ApiGatewayStack`, {
   connectFunction: lambdaStack.connectFunction,
   disconnectFunction: lambdaStack.disconnectFunction,
   defaultFunction: lambdaStack.defaultFunction,
+  joinAndSendFunction: lambdaStack.joinAndSendFunction,
 });
 apigwStack.addDependency(lambdaStack);

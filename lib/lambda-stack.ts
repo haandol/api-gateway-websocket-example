@@ -7,6 +7,7 @@ export class LambdaStack extends cdk.Stack {
   public readonly connectFunction: lambda.IFunction;
   public readonly disconnectFunction: lambda.IFunction;
   public readonly defaultFunction: lambda.IFunction;
+  public readonly joinAndSendFunction: lambda.IFunction;
 
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -56,6 +57,19 @@ export class LambdaStack extends cdk.Stack {
         removalPolicy: cdk.RemovalPolicy.RETAIN,
       },
     });
+
+    this.joinAndSendFunction = new lambda.Function(this, 'JoinAndSendFunction', {
+      functionName: `${ns}JoinAndSendFunction`,
+      code: lambda.Code.fromAsset(path.resolve(__dirname, 'functions')),
+      runtime: lambda.Runtime.PYTHON_3_7,
+      handler: 'join_and_send.handler',
+      role,
+      allowPublicSubnet: true,
+      currentVersionOptions: {
+        removalPolicy: cdk.RemovalPolicy.RETAIN,
+      },
+    });
+
   }
 
 }
