@@ -113,6 +113,10 @@ export class ApiGatewayStack extends cdk.Stack {
       stageName: alphaStage.stageName,
     });
     alphaDeployment.addDependsOn(defaultRoute);
+
+    const alphaOutput = new cdk.CfnOutput(this, `WebsocketApiOutput`, {
+      value: `wss://${this.api.ref}.execute-api.${this.region}.amazonaws.com/${alphaStage.stageName}`
+    })
   }
 
 }
