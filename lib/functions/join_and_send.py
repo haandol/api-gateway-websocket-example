@@ -1,6 +1,6 @@
-import os
 import json
 import boto3
+from datetime import datetime
 from collections import defaultdict
 
 client = None
@@ -68,7 +68,7 @@ def send(room_id, connection_id, msg):
 
     for conn_id in rooms[room_id]:
         response = client.post_to_connection(
-            Data=f'[{conn_id}]: {msg}'.encode('utf-8'),
+            Data=f'[{datetime.now().isoformat()}][{conn_id}]: {msg}'.encode('utf-8'),
             ConnectionId=conn_id,
         )
         print(response)
