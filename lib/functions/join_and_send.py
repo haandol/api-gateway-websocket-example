@@ -66,7 +66,7 @@ def send(room_id, connection_id, msg):
         print(response)
         return
 
-    now = datetime.now()
+    now = datetime.now().isoformat()
     for conn_id in rooms[room_id]:
         response = client.post_to_connection(
             Data=f'[{now}][{conn_id}]: {msg}'.encode('utf-8'),
