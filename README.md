@@ -7,8 +7,8 @@ This repository is about example code for API Gateway Websocket chatting
 # Prerequisites
 
 - awscli
-- Nodejs 10.x+
-- Python 3.4+
+- Nodejs 12.x+
+- Python 3.7+
 - AWS Account and Locally configured AWS credential
 
 # Installation
@@ -22,7 +22,7 @@ $ npm i
 Install cdk in global context and run `cdk init` if you did not initailize cdk yet.
 
 ```bash
-$ npm i -g cdk
+$ npm i -g cdk@1.112.0
 $ cdk bootstrap
 ```
 
